@@ -46,7 +46,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/NOAA-Stations-Processor" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -75,12 +75,12 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="jo.edu.htu.upskilling" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\mohcs\Documents\capstonProject" />
       <recent name="C:\Users\mohcs\Documents\GitHub" />
-    </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="jo.edu.htu.upskilling" />
     </key>
   </component>
   <component name="RunManager">
