@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="NOAA_processor@localhost" uuid="1ed41ea2-e26e-4bd7-a5a6-feae6cffc0ad">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/NOAA_processor?serverTimezone=UTC&amp;createDatabaseIfNotExist=true</jdbc-url>
+    </data-source>
+  </component>
+</project>
