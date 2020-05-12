@@ -3,6 +3,8 @@ package jo.edu.htu.upskilling.stations;
 import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.sql.JDBCType.DATE;
 
@@ -20,7 +22,11 @@ public class StationsTest {
 
         StationsRepository db = new DBStationsRepository(dataSource);
         //999999 64756 MILLBROOK 3 W                 US   NY       +41.786 -073.742 +0125.9 20041101 20170925
-       db.selectWithFilters(new Filters("007005","63896",+57.155,-170.222));
+        List<Station> stations = new ArrayList<>();
+        stations = db.findStationsByGeoLocation(+57.155,-170.222);
+        for (int i = 0; i < stations.size(); i++) {
+            System.out.println(stations.get(i).getStationName());
+        }
 
         System.out.println("done");
     }

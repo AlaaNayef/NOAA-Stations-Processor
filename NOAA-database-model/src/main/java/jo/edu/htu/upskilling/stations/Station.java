@@ -3,17 +3,17 @@ package jo.edu.htu.upskilling.stations;
 import java.sql.Date;
 
 public class Station {
-private String stationId;
-private String wbanNumber;
-private String stationName;
-private String countryId;
-private String stateOfUS;
-private String ICAO_Id;
-private Double longitude;
-private Double latitude;
-private Double altitude;
-private Date beginPeriod;
-private Date endPeriod;
+    private String stationId;
+    private String wbanNumber;
+    private String stationName;
+    private String countryId;
+    private String stateOfUS;
+    private String ICAO_Id;
+    private Double longitude;
+    private Double latitude;
+    private Double altitude;
+    private Date beginPeriod;
+    private Date endPeriod;
 
 
     public void setStationId(String stationId) {

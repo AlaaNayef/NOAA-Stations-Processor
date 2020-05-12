@@ -1,6 +1,8 @@
 package jo.edu.htu.upskilling.stations;
 
+import jo.edu.htu.upskilling.gsod.ImportGSODRes;
+
 public interface ImportStations {
 
-    void importStations(ImportStationsReq request);
+    ImportStationRes importStations(ImportStationsReq request);
 }

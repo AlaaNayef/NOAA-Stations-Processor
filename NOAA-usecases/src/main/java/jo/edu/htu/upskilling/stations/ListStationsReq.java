@@ -1,18 +1,18 @@
 package jo.edu.htu.upskilling.stations;
 
-public class Filters {
+public class ListStationsReq {
 
-private String station_id;
-private String wban_number;
-private Double latitude;
-private Double longitude;
+    private String station_id;
+    private String wban_number;
+    private Double latitude;
+    private Double longitude;
 
-    public Filters(String station_id, String wban_number) {
+    public ListStationsReq(String station_id, String wban_number) {
         this.station_id = station_id;
         this.wban_number = wban_number;
     }
 
-    public Filters(String station_id, String wban_number, Double latitude, Double longitude) {
+    public ListStationsReq(String station_id, String wban_number, Double latitude, Double longitude) {
         this.station_id = station_id;
         this.wban_number = wban_number;
         this.latitude = latitude;
@@ -50,4 +50,6 @@ private Double longitude;
     public Double getLongitude() {
         return longitude;
     }
+
+
 }

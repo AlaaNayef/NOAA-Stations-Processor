@@ -1,14 +1,15 @@
 package jo.edu.htu.upskilling.stations;
 
-import com.google.protobuf.Empty;
+import jo.edu.htu.upskilling.dbexceptions.RecordNotFoundException;
+import jo.edu.htu.upskilling.importExceptions.ImportException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Date;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DefaultImportStations implements ImportStations {
     private DBStationsRepository repository;
@@ -17,25 +18,24 @@ public class DefaultImportStations implements ImportStations {
     private int insertedRowsCount;
     private int totalRowsCount;
 
-
     public DefaultImportStations(DBStationsRepository repository) {
         this.repository = repository;
     }
 
     @Override
-    public void importStations(ImportStationsReq request) {
+    public ImportStationRes importStations(ImportStationsReq request) {
         Path path = request.getPath();
+        List<Station> AllStations = new ArrayList<>();
+        List<Station> stationsNotExisted = new ArrayList<>();
         try (BufferedReader bufferedReader = Files.newBufferedReader(path)) {
-
             while ((line = bufferedReader.readLine()) != null) {
-
                 Station station = new Station();
                 station.setStationId(line.substring(0, 6));
                 station.setWbanNumber(line.substring(7, 12));
-                if (line.substring(13, 42).trim().isEmpty()) {
+                if (line.substring(13, 43).trim().isEmpty()) {
                     station.setStationName(null);
                 } else {
-                    station.setStationName(line.substring(13, 42));
+                    station.setStationName(line.substring(13, 43));
                 }
                 if (line.substring(43, 47).trim().isEmpty()) {
                     station.setCountryId(null);
@@ -47,60 +47,61 @@ public class DefaultImportStations implements ImportStations {
                 } else {
                     station.setStateOfUS(line.substring(48, 50));
                 }
-                if (line.substring(51, 56).trim().isEmpty()) {
+                if (line.substring(51, 57).trim().isEmpty()) {
                     station.setICAO_Id(null);
                 } else {
-                    station.setICAO_Id(line.substring(51, 56));
+                    station.setICAO_Id(line.substring(51, 57));
                 }
 
                 if (!(line.substring(57, 64).trim().isEmpty())) {
                     station.setLatitude(Double.parseDouble(line.substring(57, 64)));
-                    station.setLongitude(Double.parseDouble(line.substring(65, 73)));
-                    station.setAltitude(Double.parseDouble(line.substring(74, 81)));
                 } else {
                     station.setLatitude(null);
+                }
+                if (!(line.substring(65, 73).trim().isEmpty())) {
+                    station.setLongitude(Double.parseDouble(line.substring(65, 73)));
+                } else {
                     station.setLongitude(null);
+                }
+                if (!(line.substring(74, 81).trim().isEmpty())) {
+                    station.setAltitude(Double.parseDouble(line.substring(74, 81)));
+                } else {
                     station.setAltitude(null);
                 }
-                //station.setBeginPeriod(Date.valueOf("1999-06-02"));
-                //station.setEndPeriod(Date.valueOf("1996-06-02"));
-//                System.out.println("Station id" + line.substring(0, 6));
-//                System.out.println("Wban" + line.substring(7, 12));
-//                System.out.println("Station_name" + line.substring(13, 42));
-//                System.out.println("country_id" + line.substring(43, 47));
-//                System.out.println("StateOfUS" + line.substring(48, 50));
-//                System.out.println("ICAO_Id" + line.substring(51, 56));
-//                System.out.println("Latitude" + line.substring(57, 64));
-//                System.out.println("Longitude" + line.substring(65, 73));
-//                System.out.println("Altitude" + line.substring(74, 81));
-//                System.out.println("beginDate" + line.substring(82, 90));
-//                System.out.println(line.substring(82, 86) + "-" + line.substring(86, 88) + "-" + line.substring(88, 90));
                 station.setBeginPeriod(Date.valueOf(line.substring(82, 86) + "-" + line.substring(86, 88) + "-" + line.substring(88, 90)));
                 station.setEndPeriod(Date.valueOf(line.substring(91, 95) + "-" + line.substring(95, 97) + "-" + line.substring(97, 99)));
 
-                try {
-                    repository.update(station);
-                    updatedRowsCount++;
-                } catch (RecordNotFoundException exception) {
-                    repository.insert(station);
-                    insertedRowsCount++;
-                }
-
+                AllStations.add(station);
 
             }
 
-        } catch (IOException exception) {
-            System.out.println(exception);
-        }
-        ImportStationRes result =new ImportStationRes();
+            for (Station station : AllStations) {
+                int updated = repository.update(station);
+                if (updated == 0) {
+                    stationsNotExisted.add(station);
+                } else {
+                    updatedRowsCount++;
+                }
+            }
 
+            repository.insert(stationsNotExisted);
+//            for (Station station : stationsNotExisted) {
+//                System.out.println(station.getStationName() + "station name");
+//            }
+            insertedRowsCount = stationsNotExisted.size();
+
+        } catch (
+                IOException exception) {
+            throw new ImportException(exception);
+        }
+
+        ImportStationRes result = new ImportStationRes();
 
         result.setNewRecordsCount(insertedRowsCount);
         result.setUpdatedRecordsCount(updatedRowsCount);
-        int totalNumOfRecords = repository.selectTotalRecordsCount();
-        result.setTotalNumOfRecords(totalNumOfRecords);
-        System.out.println("totalNumOfRecords"+totalNumOfRecords);
-        System.out.println("insertedRowsCount"+insertedRowsCount);
-        System.out.println("updatedRowsCount"+updatedRowsCount);
+        totalRowsCount = repository.selectTotalRecordsCount();
+        result.setTotalNumOfRecords(totalRowsCount);
+
+        return result;
     }
 }

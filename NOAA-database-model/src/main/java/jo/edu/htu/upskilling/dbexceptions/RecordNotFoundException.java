@@ -1,8 +1,8 @@
-package jo.edu.htu.upskilling.stations;
+package jo.edu.htu.upskilling.dbexceptions;
 
-import javax.sql.DataSource;
+import jo.edu.htu.upskilling.dbexceptions.DBAccessException;
 
-public class RecordNotFoundException extends DBAccessException{
+public class RecordNotFoundException extends DBAccessException {
 
     public RecordNotFoundException() {
     }

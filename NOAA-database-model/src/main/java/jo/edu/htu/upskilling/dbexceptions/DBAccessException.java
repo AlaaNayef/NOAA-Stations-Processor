@@ -1,4 +1,4 @@
-package jo.edu.htu.upskilling.stations;
+package jo.edu.htu.upskilling.dbexceptions;
 
 public class DBAccessException extends RuntimeException{
     public DBAccessException() {

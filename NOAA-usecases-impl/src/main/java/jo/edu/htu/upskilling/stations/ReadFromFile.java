@@ -24,12 +24,13 @@ public class ReadFromFile {
                 lines.add(line);
             }
             for (int i = 0; i < lines.size(); i++) {
-                System.out.println(lines.get(i).substring(0, 5) +" "+lines.get(i).substring(7,11)
-                        +" "+lines.get(i).substring(13,41)+" "+lines.get(i).substring(43,46)+" "+
-                        lines.get(i).substring(48,49)+" "+lines.get(i).substring(51,55)+" "+
-                        lines.get(i).substring(57,63)+" "+lines.get(i).substring(65,72)+" "+
-                        lines.get(i).substring(74,80)+" "+lines.get(i).substring(82,89)+" "+
-                        lines.get(i).substring(91,98));
+                System.out.println(lines.get(i).substring(13,43)+"****"+lines.get(i).substring(43,47));
+//                System.out.println(lines.get(i).substring(0, 5) +" "+lines.get(i).substring(7,11)
+//                        +" "+lines.get(i).substring(13,41)+" "+lines.get(i).substring(43,46)+" "+
+//                        lines.get(i).substring(48,49)+" "+lines.get(i).substring(51,55)+" "+
+//                        lines.get(i).substring(57,63)+" "+lines.get(i).substring(65,72)+" "+
+//                        lines.get(i).substring(74,80)+" "+lines.get(i).substring(82,89)+" "+
+//                        lines.get(i).substring(91,98));
             }
         }
 //        List<String> lines = new ArrayList<>();
