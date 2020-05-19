@@ -45,25 +45,23 @@
                 <%=station.getStationId()%> <%=station.getWbanNumber()%>
             </td>
             <td>
-                <% if (station.getStationName() != null) {%>
                 <%=station.getStationName()%>
-                <%}%>
             </td>
             <td>
-                <% if (station.getStateOfUS() !=null && station.getCountryId() !=null){ %>
-                <%=%>
                 <%=station.getCountryId()%> <%=station.getStateOfUS()%>
-
             </td>
             <td>
                 <%=station.getLatitude()%> <%=station.getLongitude()%>
             </td>
         </tr>
+
         <%
-            }
-        %>
+            }%>
     </table>
-    <%}%>
+    <%
+        }
+    %>
+
 </form>
 </body>
 </html>

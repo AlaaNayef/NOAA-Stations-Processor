@@ -16,7 +16,9 @@ import java.util.Set;
 
 public class DefaultImportGSOD implements ImportGSOD {
 
-    GSODRepository repository;
+    private GSODRepository repository;
+
+    // TODO those should be a local variables
     private int updatedRows;
     private int newRowsCount;
 
@@ -27,54 +29,60 @@ public class DefaultImportGSOD implements ImportGSOD {
     @Override
     public ImportGSODRes importGSOD(ImportGSODReq request) {
         Path path = request.getPath();
-        String line;
 
-        LinkedList<GSOD> GSODList = new LinkedList<>();
-        LinkedList<GSOD> GSODNotExisted = new LinkedList<>();
         try (BufferedReader bufferedReader = Files.newBufferedReader(path)) {
-            while ((line = bufferedReader.readLine()) != null) {
-                System.out.println(line.substring(0, 6));
-                if (!(line.substring(0, 6).equals("STN---"))) {
-                    GSOD gsod = new GSOD();
-                    gsod.setStation_Id(line.substring(0, 6));
-                    gsod.setWban(line.substring(7, 12));
-                    gsod.setDate(LocalDate.parse(line.substring(14, 18) + "-" + line.substring(18, 20) + "-" + line.substring(20, 22)));
-                    gsod.setMeanTemperature(Double.parseDouble(line.substring(24, 30)));
-                    gsod.setWindSpeed(Double.parseDouble(line.substring(78, 83)));
-                    gsod.setMaxTemp(Double.parseDouble(line.substring(102, 108)));
-                    gsod.setMinTemp(Double.parseDouble(line.substring(110, 116)));
-                    GSODList.add(gsod);
-//                    try {
-//                        repository.update(gsod);
-//                        updatedRows++;
-//                    } catch (RecordNotFoundException exception) {
-//                        repository.insert(GSODList);
-//                        newRowsCount++;
-//                    }
-
-                }
-            }
-            for (GSOD gsod : GSODList) {
-                int updated = repository.update(gsod);
-                if (updated == 0) {
-                    GSODNotExisted.add(gsod);
-                } else {
-                    updatedRows++;
-                }
-            }
-            repository.insert(GSODNotExisted);
-            newRowsCount = GSODNotExisted.size();
-
-
-        } catch (
-                IOException exception) {
+            LinkedList<GSOD> GSODList = readFile(bufferedReader);
+            LinkedList<GSOD> GSODNotExisted = new LinkedList<>();
+            updateIfExists(GSODNotExisted, GSODList);
+            insertNewRecords(GSODNotExisted);
+        } catch (IOException exception) {
             throw new ImportException(exception);
         }
 
+        return returnResult();
+    }
+
+    private ImportGSODRes returnResult() {
         ImportGSODRes importGSODRes = new ImportGSODRes();
         importGSODRes.setTotalNumOfRecords(repository.selectTotalRecordCount());
         importGSODRes.setNewRecordsCount(newRowsCount);
         importGSODRes.setUpdatedRecordsCount(updatedRows);
         return importGSODRes;
+    }
+
+    private void insertNewRecords(LinkedList<GSOD> GSODNotExisted) {
+        repository.insert(GSODNotExisted);
+        newRowsCount = GSODNotExisted.size();
+    }
+
+    private void updateIfExists(LinkedList<GSOD> GSODNotExisted, LinkedList<GSOD> GSODList) {
+        for (GSOD gsod : GSODList) {
+            int updated = repository.update(gsod);
+            if (updated == 0) {
+                GSODNotExisted.add(gsod);
+            } else {
+                updatedRows++;
+            }
+        }
+    }
+
+    private LinkedList<GSOD> readFile(BufferedReader bufferedReader) throws IOException {
+        String line;
+        LinkedList<GSOD> GSODList = new LinkedList<>();
+        while ((line = bufferedReader.readLine()) != null) {
+            System.out.println(line.substring(0, 6));
+            if (!(line.substring(0, 6).equals("STN---"))) {
+                GSOD gsod = new GSOD();
+                gsod.setStation_Id(line.substring(0, 6));
+                gsod.setWban(line.substring(7, 12));
+                gsod.setDate(LocalDate.parse(line.substring(14, 18) + "-" + line.substring(18, 20) + "-" + line.substring(20, 22)));
+                gsod.setMeanTemperature(Double.parseDouble(line.substring(24, 30)));
+                gsod.setWindSpeed(Double.parseDouble(line.substring(78, 83)));
+                gsod.setMaxTemp(Double.parseDouble(line.substring(102, 108)));
+                gsod.setMinTemp(Double.parseDouble(line.substring(110, 116)));
+                GSODList.add(gsod);
+            }
+        }
+        return GSODList;
     }
 }

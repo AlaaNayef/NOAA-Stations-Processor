@@ -17,15 +17,18 @@ import java.util.Set;
 public class NOAAStationsInitializer implements ServletContainerInitializer {
     @Override
     public void onStartup(Set<Class<?>> set, ServletContext servletContext) throws ServletException {
-        System.out.println("hello");
         MysqlConnectionPoolDataSource dataSource = new MysqlConnectionPoolDataSource();
-        dataSource.setURL("jdbc:mysql://localhost:3306/NOAA_processor?serverTimezone=UTC");
+        dataSource.setURL("jdbc:mysql://localhost:3306/NOAA_processor?serverTimezone=UTC&createDatabaseIfNotExist=true");
         dataSource.setUser("root");
         dataSource.setPassword("root");
 
         GSODRepository gsodRepository = new DBGSODRepository(dataSource);
         StationsRepository stationsRepository = new DBStationsRepository(dataSource);
         UserRepository userRepository = new DBUSerRepository(dataSource);
+
+        gsodRepository.createTable();
+        stationsRepository.createTable();
+        userRepository.createTable();
 
         //*** stations use cases ***
         ImportStations importStations = new DefaultImportStations(stationsRepository);

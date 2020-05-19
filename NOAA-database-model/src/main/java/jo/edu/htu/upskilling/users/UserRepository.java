@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface UserRepository {
 
-    void createTable(UserTransferObj user);
+    void createTable();
 
     void insert(UserTransferObj user);
 

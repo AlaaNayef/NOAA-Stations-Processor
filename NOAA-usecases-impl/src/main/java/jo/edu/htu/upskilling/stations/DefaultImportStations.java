@@ -23,6 +23,7 @@ public class DefaultImportStations implements ImportStations {
 
     @Override
     public ImportStationRes importStations(ImportStationsReq request) {
+        // Same as gsod import
         Path path = request.getPath();
         List<Station> AllStations = new ArrayList<>();
         List<Station> stationsNotExisted = new ArrayList<>();

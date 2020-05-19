@@ -10,7 +10,7 @@ public class DBUSerRepository implements UserRepository {
 
     private DataSource dataSource;
 
-    private static final String SQL_CREATE = "create table users " +
+    private static final String SQL_CREATE = "create table if not exists users " +
             "(" +
             "username varchar(255) primary key," +
             " name varchar(255) not null ," +
@@ -27,7 +27,7 @@ public class DBUSerRepository implements UserRepository {
         this.dataSource = dataSource;
     }
 
-    public void createTable(UserTransferObj user) {
+    public void createTable() {
 
         try (Connection connection = dataSource.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_CREATE)) {
