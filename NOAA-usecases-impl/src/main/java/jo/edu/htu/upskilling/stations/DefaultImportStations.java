@@ -1,6 +1,5 @@
 package jo.edu.htu.upskilling.stations;
 
-import jo.edu.htu.upskilling.dbexceptions.RecordNotFoundException;
 import jo.edu.htu.upskilling.importExceptions.ImportException;
 
 import java.io.BufferedReader;
@@ -12,13 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultImportStations implements ImportStations {
-    private DBStationsRepository repository;
+    private StationsRepository repository;
     private String line;
     private int updatedRowsCount;
     private int insertedRowsCount;
     private int totalRowsCount;
 
-    public DefaultImportStations(DBStationsRepository repository) {
+    public DefaultImportStations(StationsRepository repository) {
         this.repository = repository;
     }
 
@@ -48,9 +47,9 @@ public class DefaultImportStations implements ImportStations {
                     station.setStateOfUS(line.substring(48, 50));
                 }
                 if (line.substring(51, 57).trim().isEmpty()) {
-                    station.setICAO_Id(null);
+                    station.setIcaoId(null);
                 } else {
-                    station.setICAO_Id(line.substring(51, 57));
+                    station.setIcaoId(line.substring(51, 57));
                 }
 
                 if (!(line.substring(57, 64).trim().isEmpty())) {
@@ -72,13 +71,17 @@ public class DefaultImportStations implements ImportStations {
                 station.setEndPeriod(Date.valueOf(line.substring(91, 95) + "-" + line.substring(95, 97) + "-" + line.substring(97, 99)));
 
                 AllStations.add(station);
+                System.out.println(AllStations.size());
 
             }
 
             for (Station station : AllStations) {
+                System.out.println(station.getStationName());
+
                 int updated = repository.update(station);
                 if (updated == 0) {
                     stationsNotExisted.add(station);
+
                 } else {
                     updatedRowsCount++;
                 }

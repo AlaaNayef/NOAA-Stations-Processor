@@ -1,0 +1,12 @@
+jo\edu\htu\upskilling\initializers\NOAAStationsInitializer.class
+jo\edu\htu\upskilling\servlets\gsod\ViewGSODServlet.class
+jo\edu\htu\upskilling\servlets\stations\ViewStationsServlet.class
+jo\edu\htu\upskilling\servlets\users\UsersManagementsServlet.class
+jo\edu\htu\upskilling\servlets\users\AddUserServlet.class
+jo\edu\htu\upskilling\servlets\stations\ImportStationsServlet.class
+jo\edu\htu\upskilling\servlets\welcome\HomePageServlet.class
+jo\edu\htu\upskilling\servlets\users\ChangePasswordServlet.class
+jo\edu\htu\upskilling\servlets\gsod\ImportGSODServlet.class
+jo\edu\htu\upskilling\servlets\users\LoginScreenServlet.class
+jo\edu\htu\upskilling\servlets\gsod\ImportGSODResultsServlet.class
+jo\edu\htu\upskilling\servlets\stations\ImportStationsResultsServlet.class

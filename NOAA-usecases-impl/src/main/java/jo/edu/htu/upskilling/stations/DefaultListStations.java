@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultListStations implements ListStations {
-    private DBStationsRepository repository;
+    private StationsRepository repository;
     List<Station> allStations = new ArrayList<>();
 
-    public DefaultListStations(DBStationsRepository repository) {
+    public DefaultListStations(StationsRepository repository) {
         this.repository = repository;
     }
 

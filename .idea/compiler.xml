@@ -9,6 +9,7 @@
         <module name="NOAA-usecases-impl" />
         <module name="NOAA-database-model" />
         <module name="NOAA-usecases" />
+        <module name="NOAA-webapp" />
       </profile>
     </annotationProcessing>
   </component>

@@ -8,7 +8,7 @@ public class Station {
     private String stationName;
     private String countryId;
     private String stateOfUS;
-    private String ICAO_Id;
+    private String icaoId;
     private Double longitude;
     private Double latitude;
     private Double altitude;
@@ -36,8 +36,8 @@ public class Station {
         this.stateOfUS = stateOfUS;
     }
 
-    public void setICAO_Id(String ICAO_Id) {
-        this.ICAO_Id = ICAO_Id;
+    public void setIcaoId(String icaoId) {
+        this.icaoId = icaoId;
     }
 
     public void setLongitude(Double longitude) {
@@ -80,8 +80,8 @@ public class Station {
         return stateOfUS;
     }
 
-    public String getICAO_Id() {
-        return ICAO_Id;
+    public String getIcaoId() {
+        return icaoId;
     }
 
     public Double getLongitude() {

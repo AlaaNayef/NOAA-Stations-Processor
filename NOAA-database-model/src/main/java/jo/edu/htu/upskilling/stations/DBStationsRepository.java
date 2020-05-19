@@ -1,7 +1,6 @@
 package jo.edu.htu.upskilling.stations;
 
 import jo.edu.htu.upskilling.dbexceptions.DBAccessException;
-import jo.edu.htu.upskilling.dbexceptions.RecordNotFoundException;
 import jo.edu.htu.upskilling.utilities.TotalNumOfRecords;
 
 import javax.sql.DataSource;
@@ -36,7 +35,7 @@ public class DBStationsRepository implements StationsRepository {
             "state_of_US =? , icao_id =?,latitude=?,longitude=?," +
             "altitude=?, begin_period=?,end_period=?" +
             " where (station_id=? && wban_number=? )";
-    private static final String SELECT_COUNT = "select count(*)from stations";
+    private static final String SELECT_COUNT = "select count(*)from stations ";
     private static final String QUERY_BY_STATION_ID = "select station_id,wban_number,station_name," +
             "country_id,state_of_US,ICAO_Id,latitude,longitude,altitude,begin_period,end_period from stations " +
             "where station_id like CONCAT(?,'%') ";
@@ -87,6 +86,7 @@ public class DBStationsRepository implements StationsRepository {
                     preparedStatement.addBatch();
                     i++;
                     if (((i % 1000) == 0) || (i == stations.size())) {
+                        System.out.println("1000 rows inserted");
                         preparedStatement.executeBatch();
                         connection.commit();
                     }
@@ -110,7 +110,7 @@ public class DBStationsRepository implements StationsRepository {
         preparedStatement.setString(3, station.getStationName());
         preparedStatement.setString(4, station.getCountryId());
         preparedStatement.setString(5, station.getStateOfUS());
-        preparedStatement.setString(6, station.getICAO_Id());
+        preparedStatement.setString(6, station.getIcaoId());
         if (station.getLatitude() == (null)) {
             preparedStatement.setNull(7, Types.DOUBLE);
             preparedStatement.setNull(8, Types.DOUBLE);
@@ -142,7 +142,7 @@ public class DBStationsRepository implements StationsRepository {
         preparedStatement.setString(1, station.getStationName());
         preparedStatement.setString(2, station.getCountryId());
         preparedStatement.setString(3, station.getStateOfUS());
-        preparedStatement.setString(4, station.getICAO_Id());
+        preparedStatement.setString(4, station.getIcaoId());
         if (station.getLatitude() == (null)) {
             preparedStatement.setNull(5, Types.DOUBLE);
         } else {
@@ -196,7 +196,7 @@ public class DBStationsRepository implements StationsRepository {
                 station.setStationName(resultSet.getString("station_name"));
                 station.setCountryId(resultSet.getString("country_id"));
                 station.setStateOfUS(resultSet.getString("state_of_US"));
-                station.setICAO_Id(resultSet.getString("icao_id"));
+                station.setIcaoId(resultSet.getString("icao_id"));
                 station.setLatitude(resultSet.getDouble("latitude"));
                 station.setLongitude(resultSet.getDouble("longitude"));
                 station.setAltitude(resultSet.getDouble("altitude"));

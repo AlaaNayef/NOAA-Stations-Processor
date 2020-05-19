@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultListGSOD implements ListGSOD {
-   DBGSODRepository repository;
+   GSODRepository repository;
 
-    public DefaultListGSOD(DBGSODRepository repository) {
+    public DefaultListGSOD(GSODRepository repository) {
         this.repository = repository;
     }
 

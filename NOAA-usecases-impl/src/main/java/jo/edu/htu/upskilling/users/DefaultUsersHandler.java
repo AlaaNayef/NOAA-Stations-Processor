@@ -2,9 +2,9 @@ package jo.edu.htu.upskilling.users;
 
 public class DefaultUsersHandler implements UsersHandler {
 
-    DBUSerRepository repository;
+    UserRepository repository;
 
-    public DefaultUsersHandler(DBUSerRepository repository) {
+    public DefaultUsersHandler(UserRepository repository) {
         this.repository = repository;
 
     }

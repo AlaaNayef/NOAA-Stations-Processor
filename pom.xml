@@ -12,6 +12,7 @@
         <module>NOAA-usecases</module>
         <module>NOAA-database-model</module>
         <module>NOAA-usecases-impl</module>
+        <module>NOAA-webapp</module>
     </modules>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>

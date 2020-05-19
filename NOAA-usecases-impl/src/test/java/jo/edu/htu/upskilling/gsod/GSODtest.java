@@ -1,10 +1,6 @@
 package jo.edu.htu.upskilling.gsod;
 
 import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
-import com.sun.xml.internal.ws.api.message.Packet;
-import jo.edu.htu.upskilling.gsod.*;
-
-import javax.activation.DataSource;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
